@@ -5,7 +5,7 @@ case class Lists(value: Either[Seq[Lists], String])
 object Lists {
   implicit def string2Lists(s: String): Lists = Lists(Right(s))
 
-  def apply(values: Lists*): Lists = Lists(Left(values))
+  def apply(vs: Lists*): Lists = Lists(Left(vs))
 
   def apply(s: String): Lists = Lists(Right(s))
 }

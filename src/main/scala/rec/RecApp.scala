@@ -7,12 +7,12 @@ object Lists {
 
   def apply(vs: Rec[_]*): Rec[_] = Rec("value" -> vs)
 
-  def apply(v: String): Rec[_] = Rec("value" -> v)
+  def apply(s: String): Rec[ {def value: String}] = Rec("value" -> s)
 }
 
 object RecApp extends App {
-  def printlnLists(recs: Rec[_]): Unit = {
-    println(recs)
+  def printlnLists(lists: Rec[_]): Unit = {
+    println(lists)
 
     def printRec(rs: Rec[_]): Unit = rs match {
       case Rec(value: String) => print(value)
@@ -26,7 +26,7 @@ object RecApp extends App {
         print(")")
     }
 
-    recs match {
+    lists match {
       case r@Rec(value: String) =>
         print("Lists(")
         printRec(r)
