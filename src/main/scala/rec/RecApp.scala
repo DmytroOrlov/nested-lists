@@ -3,20 +3,20 @@ package rec
 import records.Rec
 
 object Lists {
-  implicit def string2Rec(s: String): Rec[_] = Rec("value" -> s)
+  implicit def string2Rec(s: String): Rec[ {def value: String}] = apply(s)
 
-  def apply(vs: Rec[_]*): Rec[_] = Rec("value" -> vs)
+  def apply(vs: Rec[{def value: Any}]*): Rec[{def value: Seq[Rec[{def value: Any}]]}] = Rec("value" -> vs)
 
   def apply(s: String): Rec[ {def value: String}] = Rec("value" -> s)
 }
 
 object RecApp extends App {
-  def printlnLists(lists: Rec[_]): Unit = {
+  def printlnLists(lists: Rec[{def value: Any}]): Unit = {
     println(lists)
 
-    def printRec(rs: Rec[_]): Unit = rs match {
+    def printRec(rs: Rec[{def value: Any}]): Unit = rs match {
       case Rec(value: String) => print(value)
-      case Rec(value: Seq[Rec[_]]) =>
+      case Rec(value: Seq[Rec[{def value: Any}]]) =>
         print("Lists(")
         printRec(value.head)
         value.tail.foreach { v =>
